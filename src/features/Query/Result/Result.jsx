@@ -52,7 +52,7 @@ function Result({ results = [], ...restProps }) {
           handleClose={handleModalClose}
           title={selected.capsule_serial}
           actions={actions}
-          content={selected}
+          content={JSON.stringify(selected)}
         />
       )}
     </div>

@@ -54,16 +54,16 @@ export default function CustomDialog({
         <BootstrapDialogTitle onClose={handleClose}>
           {title}
         </BootstrapDialogTitle>
-        <DialogContent dividers sx={{ minWidth: "10rem" }}>
-          {JSON.stringify(content)}
-        </DialogContent>
-        <DialogActions>
-          {actions.map((action) => (
-            <Button onClick={action.onClick} key={action.text}>
-              {action.text}
-            </Button>
-          ))}
-        </DialogActions>
+        <DialogContent dividers={title}>{content}</DialogContent>
+        {actions.length > 1 && (
+          <DialogActions>
+            {actions.map((action) => (
+              <Button onClick={action.onClick} key={action.text}>
+                {action.text}
+              </Button>
+            ))}
+          </DialogActions>
+        )}
       </BootstrapDialog>
     </div>
   );
