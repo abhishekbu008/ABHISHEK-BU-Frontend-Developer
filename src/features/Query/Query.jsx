@@ -9,7 +9,9 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
+import useAxios from "../../hooks/useAxios";
 
 import {
   StyledContainer,
@@ -17,6 +19,10 @@ import {
   StyledSearchContainer,
   StyledSearchInput,
 } from "./Query.style";
+import Result from "./Result/Result";
+import { constants } from "../../constants";
+import { buildQuery } from "../../helpers/helpers";
+import { Pagination } from "../../components";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,21 +36,65 @@ const MenuProps = {
 };
 
 const options = [
-  { text: "capsule_serial", search: true },
-  { text: "capsule_id", search: true },
-  { text: "status", search: true },
-  { text: "original_launch", search: true },
-  { text: "landings", search: true },
-  { text: "type", search: true },
+  "capsule_serial",
+  "capsule_id",
+  "status",
+  "original_launch",
+  "mission",
+  "landings",
+  "type",
+  "reuse_count",
 ];
 
-function Query({ selectOptions = options }) {
+function Query({
+  feature = "CAPSULES",
+  searchableOptions = options,
+  limit = 8,
+  total = 18,
+}) {
   const [selected, setSelected] = useState([]);
   const [searchValues, setSearchValues] = useState({});
+  const [results, setResults] = useState([]);
+  const [paginationProp, setPaginationProp] = useState({
+    page: 1,
+    offset: 0,
+    count: 1,
+  });
+  const [loading, setLoading] = useState(true);
 
-  const searchableOptions = selectOptions
-    .filter((opt) => opt.search)
-    .map((opt) => opt.text);
+  const totalPages = Math.ceil(total / limit);
+
+  const { doRequest } = useAxios({
+    url: constants.AXIOS_SPACEX[feature] + `?id=true`,
+    method: "get",
+  });
+
+  useEffect(() => {
+    setLoading(true);
+    const queryObj = {
+      ...searchValues,
+      limit,
+      offset: paginationProp.offset,
+      id: true,
+    };
+    const query = buildQuery(queryObj);
+    doRequest({
+      url: constants.AXIOS_SPACEX[feature] + `?${query}`,
+    })
+      .then((res) => {
+        const modifiedRes = [];
+        res.forEach((r) => {
+          const modified = { ...r };
+          modified.id = modified._id;
+          delete modified._id;
+          modifiedRes.push(modified);
+        });
+        setResults(modifiedRes);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [feature, searchValues, paginationProp]);
 
   const handleSelectChange = (event) => {
     const {
@@ -66,6 +116,18 @@ function Query({ selectOptions = options }) {
     const clonedSearchValues = { ...searchValues };
     clonedSearchValues[select] = value;
     setSearchValues(clonedSearchValues);
+    setPaginationProp({
+      page: 1,
+      offset: 0,
+      count: 1,
+    });
+  };
+  const handlePageChange = (page) => {
+    setPaginationProp({
+      ...paginationProp,
+      page: page,
+      offset: limit * (page - 1),
+    });
   };
 
   return (
@@ -77,7 +139,7 @@ function Query({ selectOptions = options }) {
         marginTop={3}
         marginBottom={6}
       >
-        Rockets
+        {feature}
       </Typography>
 
       <StyledFormContainer>
@@ -122,6 +184,17 @@ function Query({ selectOptions = options }) {
           ))}
         </StyledSearchContainer>
       </StyledFormContainer>
+
+      {!loading && (
+        <>
+          <Result results={results} style={{ marginBottom: "2rem" }} />
+          <Pagination
+            page={paginationProp.page}
+            onChange={handlePageChange}
+            count={totalPages}
+          />
+        </>
+      )}
     </StyledContainer>
   );
 }

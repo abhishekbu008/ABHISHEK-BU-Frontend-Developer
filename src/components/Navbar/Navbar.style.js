@@ -20,6 +20,7 @@ export const StyledNavList = styled.ul`
 
 export const StyledNavItem = styled.li`
   color: #fff;
+  margin-right: 2rem;
 `;
 
 export const StyledLogo = Muistyled(Typography)`

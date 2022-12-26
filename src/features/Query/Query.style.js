@@ -1,5 +1,7 @@
 import { Box, TextField, styled as Muistyled } from "@mui/material";
 import styled from "styled-components/macro";
+import { Pagination } from "../../components";
+import Result from "./Result/Result";
 
 export const StyledContainer = styled.div`
   min-height: 100vh;
@@ -20,11 +22,14 @@ export const StyledFormContainer = styled.div`
 export const StyledSearchContainer = Muistyled(Box)`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 `;
 
 export const StyledSearchInput = Muistyled(TextField)`
   &:not(:last-child) {
     margin-right: 3rem;
+    margin-bottom: 2rem;
   }
 `;
+
