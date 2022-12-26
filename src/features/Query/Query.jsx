@@ -59,10 +59,9 @@ function Query({
     page: 1,
     offset: 0,
     count: 1,
+    totalPages: Math.ceil(total / limit),
   });
   const [loading, setLoading] = useState(true);
-
-  const totalPages = Math.ceil(total / limit);
 
   const { doRequest } = useAxios({
     url: constants.AXIOS_SPACEX[feature] + `?id=true`,
@@ -73,7 +72,7 @@ function Query({
     setLoading(true);
     const queryObj = {
       ...searchValues,
-      limit,
+      limit: limit,
       offset: paginationProp.offset,
       id: true,
     };
@@ -96,6 +95,7 @@ function Query({
       });
   }, [feature, searchValues, paginationProp]);
 
+
   const handleSelectChange = (event) => {
     const {
       target: { value },
@@ -117,6 +117,7 @@ function Query({
     clonedSearchValues[select] = value;
     setSearchValues(clonedSearchValues);
     setPaginationProp({
+      ...paginationProp,
       page: 1,
       offset: 0,
       count: 1,
@@ -191,7 +192,7 @@ function Query({
           <Pagination
             page={paginationProp.page}
             onChange={handlePageChange}
-            count={totalPages}
+            count={paginationProp.totalPages}
           />
         </>
       )}

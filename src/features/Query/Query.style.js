@@ -1,7 +1,5 @@
 import { Box, TextField, styled as Muistyled } from "@mui/material";
 import styled from "styled-components/macro";
-import { Pagination } from "../../components";
-import Result from "./Result/Result";
 
 export const StyledContainer = styled.div`
   min-height: 100vh;

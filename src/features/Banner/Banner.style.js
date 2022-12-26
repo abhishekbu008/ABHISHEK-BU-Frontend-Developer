@@ -3,7 +3,7 @@ import { Typography, styled as Muistyled, Button } from "@mui/material";
 import styled from "styled-components/macro";
 
 export const StyledBanner = styled.div`
-  min-height: 90vh;
+  min-height: calc(100vh - 7rem);
   color: #fff;
   background-color: #000;
   position: relative;
@@ -15,7 +15,9 @@ export const StyledBannerContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  height: calc(100vh - 7rem);
+  margin-top: auto;
+  transform: translateY(-7%);
 `;
 
 export const StyledBannerText = Muistyled(Typography)`

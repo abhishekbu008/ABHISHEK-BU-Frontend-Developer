@@ -18,15 +18,9 @@ function App() {
 
   const navItems = [
     {
-      id: "search",
-      text: "Explore",
-      link: "#search",
-      onClick: () => {},
-    },
-    {
       id: "signin",
-      text: "Sign In / Sign Up",
-      link: "#",
+      text: "Sign In",
+      link: "",
       onClick: () => {
         setDialogOpen(true);
       },

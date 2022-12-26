@@ -1,4 +1,4 @@
-import { Link, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import {
   StyledNavContainer,
   StyledNavItem,
@@ -13,9 +13,9 @@ function Navbar({ navItems = [] }) {
       <StyledNavList>
         {navItems.map((navItem) => (
           <StyledNavItem key={navItem.id}>
-            <Link href={navItem.link} underline="none" color={'inherit'} onClick={navItem.onClick}>
+            <Button color={'inherit'} onClick={navItem.onClick} variant="text">
               <Typography variant="h6" fontSize={20}>{navItem.text}</Typography>
-            </Link>
+            </Button>
           </StyledNavItem>
         ))}
       </StyledNavList>
