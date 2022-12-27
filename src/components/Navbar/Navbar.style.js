@@ -26,5 +26,4 @@ export const StyledNavItem = styled.li`
 export const StyledLogo = Muistyled(Typography)`
   cursor: pointer;
   font-size: 2rem;
-
 `;

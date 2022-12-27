@@ -12,6 +12,7 @@ import {
 
 import { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
+import { axiosSpaceX as axios } from "../../lib";
 
 import {
   StyledContainer,
@@ -63,7 +64,7 @@ function Query({
   });
   const [loading, setLoading] = useState(true);
 
-  const { doRequest } = useAxios({
+  const { doRequest } = useAxios(axios, {
     url: constants.AXIOS_SPACEX[feature] + `?id=true`,
     method: "get",
   });
@@ -94,7 +95,6 @@ function Query({
         setLoading(false);
       });
   }, [feature, searchValues, paginationProp]);
-
 
   const handleSelectChange = (event) => {
     const {

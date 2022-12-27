@@ -4,6 +4,11 @@ const constants = {
     CAPSULES: "/capsules",
     ROCKETS: "/rockets",
   },
+  AUTH: {
+    BASE_URL: "http://localhost:3001/api/users/",
+    SIGN_UP: "/signup",
+    SIGN_IN: "/signin",
+  },
 };
 
 export default constants;
