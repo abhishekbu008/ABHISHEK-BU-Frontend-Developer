@@ -45,7 +45,7 @@ export default function CustomDialog({
         <BootstrapDialogTitle onClose={handleClose}>
           {title}
         </BootstrapDialogTitle>
-        <DialogContent dividers={title}>{content}</DialogContent>
+        <DialogContent dividers={!!title}>{content}</DialogContent>
         {actions.length > 1 && (
           <DialogActions>
             {actions.map((action) => (

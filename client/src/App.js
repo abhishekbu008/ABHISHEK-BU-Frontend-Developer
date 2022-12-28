@@ -1,64 +1,41 @@
-import { useState } from "react";
 import "./App.css";
 import { CustomDialog, Navbar } from "./components";
 import { AuthenticationForm, Banner, Query } from "./features";
-import { auth as axios } from "./lib";
-import useAxios from "./hooks/useAxios";
-import { constants } from "./constants";
-import { useAuth } from "./hooks/useAuth";
 import { Button, Card, CardContent, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { authDialogClose, authDialogOpen } from "./appSlice";
+import { signout } from "./features/Authentication/authenticationSlice";
 
 function App() {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const auth = useAuth();
+  const auth = useSelector((state) => state.auth);
+  const authDialogState = useSelector((state) => state.app.authDialog);
+  const dispatch = useDispatch();
 
-  const { doRequest, errors } = useAxios(axios, {
-    url: constants.AUTH.SIGN_IN + `?id=true`,
-    method: "post",
-  });
-
-  const handleSubmit = (data) => {
-    const url =
-      data.type === "Sign In" ? constants.AUTH.SIGN_IN : constants.AUTH.SIGN_UP;
-    doRequest({
-      url: url,
-      data: {
-        email: data.email,
-        password: data.password,
-      },
-    })
-      .then((res) => {
-        const { token, user } = res;
-        localStorage.setItem("jwt", token);
-        auth.login(user);
-        handleClose();
-      })
-      .catch();
+  const handleDialogClose = () => {
+    dispatch(authDialogClose());
   };
 
-  const handleClose = () => {
-    setDialogOpen(false);
-  };
+  const navItems = [];
 
-  const navItems = [
-    {
-      id: "signin",
-      text: "Sign In",
-      link: "",
-      onClick: () => {
-        setDialogOpen(true);
-      },
-    },
-    {
+  if (auth.user) {
+    navItems.push({
       id: "signout",
       text: "Sign Out",
       link: "",
       onClick: () => {
-        localStorage.removeItem("jwt");
-        auth.logout();
+        dispatch(signout());
       },
-    },
-  ];
+    });
+  } else {
+    navItems.push({
+      id: "signin",
+      text: "Sign In",
+      link: "",
+      onClick: () => {
+        dispatch(authDialogOpen());
+      },
+    });
+  }
 
   return (
     <>
@@ -79,9 +56,9 @@ function App() {
               <Button
                 sx={{ height: "5rem" }}
                 variant="contained"
-                onClick={() => setDialogOpen(true)}
+                onClick={() => dispatch(authDialogOpen())}
               >
-                Sign in to view this page
+                Sign in to view capsules
               </Button>
             </Typography>
           </CardContent>
@@ -89,9 +66,9 @@ function App() {
       )}
 
       <CustomDialog
-        open={dialogOpen}
-        handleClose={handleClose}
-        content={<AuthenticationForm onSubmit={handleSubmit} />}
+        open={authDialogState}
+        handleClose={handleDialogClose}
+        content={<AuthenticationForm />}
         contentType="component"
       />
     </>

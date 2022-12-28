@@ -10,9 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useEffect, useState } from "react";
-import useAxios from "../../hooks/useAxios";
-import { axiosSpaceX as axios } from "../../lib";
+import React, { useEffect } from "react";
 
 import {
   StyledContainer,
@@ -21,9 +19,11 @@ import {
   StyledSearchInput,
 } from "./Query.style";
 import Result from "./Result/Result";
-import { constants } from "../../constants";
 import { buildQuery } from "../../helpers/helpers";
 import { Pagination } from "../../components";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFeature, searched, selected, pageChanged } from "./querySlice";
+import { constants } from "../../constants";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -47,54 +47,24 @@ const options = [
   "reuse_count",
 ];
 
-function Query({
-  feature = "CAPSULES",
-  searchableOptions = options,
-  limit = 8,
-  total = 18,
-}) {
-  const [selected, setSelected] = useState([]);
-  const [searchValues, setSearchValues] = useState({});
-  const [results, setResults] = useState([]);
-  const [paginationProp, setPaginationProp] = useState({
-    page: 1,
-    offset: 0,
-    count: 1,
-    totalPages: Math.ceil(total / limit),
-  });
-  const [loading, setLoading] = useState(true);
-
-  const { doRequest } = useAxios(axios, {
-    url: constants.AXIOS_SPACEX[feature] + `?id=true`,
-    method: "get",
-  });
+function Query({ feature = "CAPSULES", searchableOptions = options }) {
+  const dispatch = useDispatch();
+  const results = useSelector((state) => state.query.results);
+  const loading = useSelector((state) => state.query.loading);
+  const selectedOptions = useSelector((state) => state.query.selectedOptions);
+  const searchValues = useSelector((state) => state.query.searchValues);
+  const pagination = useSelector((state) => state.query.pagination);
 
   useEffect(() => {
-    setLoading(true);
     const queryObj = {
       ...searchValues,
-      limit: limit,
-      offset: paginationProp.offset,
+      limit: constants.CAPSULES.LIMIT,
+      offset: pagination.offset,
       id: true,
     };
     const query = buildQuery(queryObj);
-    doRequest({
-      url: constants.AXIOS_SPACEX[feature] + `?${query}`,
-    })
-      .then((res) => {
-        const modifiedRes = [];
-        res.forEach((r) => {
-          const modified = { ...r };
-          modified.id = modified._id;
-          delete modified._id;
-          modifiedRes.push(modified);
-        });
-        setResults(modifiedRes);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [feature, searchValues, paginationProp]);
+    dispatch(fetchFeature({ feature, query }));
+  }, [searchValues, selectedOptions, pagination.offset, dispatch, feature]);
 
   const handleSelectChange = (event) => {
     const {
@@ -105,8 +75,8 @@ function Query({
     for (let val of selectValues) {
       changedValues[val] = searchValues[val] ? searchValues[val] : "";
     }
-    setSelected(selectValues);
-    setSearchValues(changedValues);
+    dispatch(selected(selectValues));
+    dispatch(searched(changedValues));
   };
 
   const handleSearchChange = (event, select) => {
@@ -115,20 +85,11 @@ function Query({
     } = event;
     const clonedSearchValues = { ...searchValues };
     clonedSearchValues[select] = value;
-    setSearchValues(clonedSearchValues);
-    setPaginationProp({
-      ...paginationProp,
-      page: 1,
-      offset: 0,
-      count: 1,
-    });
+    dispatch(searched(clonedSearchValues));
   };
+
   const handlePageChange = (page) => {
-    setPaginationProp({
-      ...paginationProp,
-      page: page,
-      offset: limit * (page - 1),
-    });
+    dispatch(pageChanged(page));
   };
 
   return (
@@ -151,7 +112,7 @@ function Query({
               labelId="select-by-label"
               id="select-by"
               multiple
-              value={selected}
+              value={selectedOptions}
               onChange={handleSelectChange}
               input={<OutlinedInput label="Search By" />}
               renderValue={(selected) => selected.join(", ")}
@@ -160,7 +121,7 @@ function Query({
             >
               {searchableOptions.map((opt) => (
                 <MenuItem key={opt} value={opt}>
-                  <Checkbox checked={selected.indexOf(opt) > -1} />
+                  <Checkbox checked={selectedOptions.indexOf(opt) > -1} />
                   <ListItemText primary={opt} />
                 </MenuItem>
               ))}
@@ -174,28 +135,29 @@ function Query({
           autoComplete="off"
           fontSize={4}
         >
-          {selected.map((select) => (
+          {selectedOptions.map((select) => (
             <StyledSearchInput
               key={select}
               id={select}
               label={select}
               variant="outlined"
+              value={searchValues[select]}
               onChange={(e) => handleSearchChange(e, select)}
             />
           ))}
         </StyledSearchContainer>
       </StyledFormContainer>
 
-      {!loading && (
-        <>
-          <Result results={results} style={{ marginBottom: "2rem" }} />
-          <Pagination
-            page={paginationProp.page}
-            onChange={handlePageChange}
-            count={paginationProp.totalPages}
-          />
-        </>
+      {loading ? (
+        <Typography textAlign={"center"}>Loading...</Typography>
+      ) : (
+        <Result results={results} style={{ marginBottom: "2rem" }} />
       )}
+      <Pagination
+        page={pagination.page}
+        onChange={handlePageChange}
+        count={pagination.totalPages}
+      />
     </StyledContainer>
   );
 }

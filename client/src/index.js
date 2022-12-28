@@ -8,13 +8,17 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { AuthProvider } from "./hooks/useAuth";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <AuthProvider>
       <App />
     </AuthProvider>
+    </Provider>
   </React.StrictMode>
 );
 

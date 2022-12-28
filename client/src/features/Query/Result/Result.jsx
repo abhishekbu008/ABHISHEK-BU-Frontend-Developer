@@ -1,34 +1,21 @@
 import { Paper, Typography } from "@mui/material";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Card, CustomDialog } from "../../../components";
+import CapsuleContent from "../CapsuleContent/CapsuleContent";
+import { resultSelected, resultClosed } from "../querySlice";
 
 function Result({ results = [], ...restProps }) {
-  const contents = [];
-  const [selected, setSelected] = useState(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const dispatch = useDispatch();
+  const selectedResult = useSelector((state) => state.query.selectedResult);
+  const resultModalOpen = useSelector((state) => state.query.resultModalOpen);
 
-  if (results instanceof Array) {
-    results.forEach((result) => {
-      const content = [];
-      for (let k in result) {
-        const keyVal = {};
-        keyVal.key = k;
-        keyVal.value = result[k];
-        content.push(keyVal);
-      }
-      contents.push(content);
-    });
-  }
-
-  const handleClick = (content) => {
-    const id = content.find((c) => c.key === "id");
-    const result = results.find((r) => r.id === id.value);
-    setSelected(result);
-    setDialogOpen(true);
+  const handleClick = (result) => {
+    dispatch(resultSelected(result));
   };
 
   const handleModalClose = () => {
-    setDialogOpen(false);
+    dispatch(resultClosed());
   };
 
   const actions = [{ text: "Close", onClick: handleModalClose }];
@@ -38,21 +25,25 @@ function Result({ results = [], ...restProps }) {
       <Typography marginY={8} fontSize={40} textAlign="center">
         Results
       </Typography>
-      {contents.map((content, i) => (
+      {results.map((result, i) => (
         <Paper
-          key={JSON.stringify(content)}
-          onClick={() => handleClick(content)}
+          key={i}
+          onClick={() => handleClick(result)}
+          sx={{ cursor: "pointer" }}
         >
-          <Card contents={content} />
+          <Card>
+            <CapsuleContent>{result}</CapsuleContent>
+          </Card>
         </Paper>
       ))}
-      {selected && (
+
+      {selectedResult && (
         <CustomDialog
-          open={dialogOpen}
+          open={resultModalOpen}
           handleClose={handleModalClose}
-          title={selected.capsule_serial}
+          title={selectedResult.capsule_serial}
           actions={actions}
-          content={JSON.stringify(selected)}
+          content={<CapsuleContent>{selectedResult}</CapsuleContent>}
         />
       )}
     </div>

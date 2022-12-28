@@ -9,18 +9,25 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signin } from "./authenticationSlice";
 
-export default function Authenticate({ onSubmit = () => {} }) {
+export default function Authenticate() {
   const [title, setTitle] = useState("Sign In");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    onSubmit({
-      email: data.get("email"),
-      password: data.get("password"),
-      type: title,
-    });
+    const type = title.split(" ").join("_").toUpperCase();
+    dispatch(
+      signin({
+        email: email,
+        password: password,
+        type: type,
+      })
+    );
   };
 
   const nextTitle = (currentTitle) =>
@@ -52,6 +59,8 @@ export default function Authenticate({ onSubmit = () => {} }) {
             label="Email Address"
             name="email"
             autoFocus
+            value={email}
+            onChange={({ target: { value } }) => setEmail(value)}
           />
           <TextField
             margin="normal"
@@ -61,12 +70,15 @@ export default function Authenticate({ onSubmit = () => {} }) {
             label="Password"
             type="password"
             id="password"
+            value={password}
+            onChange={({ target: { value } }) => setPassword(value)}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            size="large"
           >
             {title}
           </Button>

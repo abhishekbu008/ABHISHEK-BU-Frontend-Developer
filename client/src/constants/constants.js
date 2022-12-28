@@ -9,6 +9,10 @@ const constants = {
     SIGN_UP: "/signup",
     SIGN_IN: "/signin",
   },
+  CAPSULES: {
+    TOTAL_ITEMS: 18,
+    LIMIT: 8
+  }
 };
 
 export default constants;

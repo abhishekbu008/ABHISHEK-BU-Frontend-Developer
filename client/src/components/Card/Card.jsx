@@ -1,15 +1,9 @@
-import { Card as MuiCard, CardContent, Typography } from "@mui/material";
+import { Card as MuiCard, CardContent } from "@mui/material";
 
-function Card({ contents }) {
+function Card({ children }) {
   return (
     <MuiCard>
-      <CardContent>
-        {contents.map((content) => (
-          <Typography key={content.key}>
-            {content.key}: {JSON.stringify(content.value)}
-          </Typography>
-        ))}
-      </CardContent>
+      <CardContent>{children}</CardContent>
     </MuiCard>
   );
 }
