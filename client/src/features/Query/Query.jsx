@@ -9,7 +9,6 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-
 import React, { useEffect } from "react";
 
 import {
@@ -20,7 +19,7 @@ import {
 } from "./Query.style";
 import Result from "./Result/Result";
 import { buildQuery } from "../../helpers/helpers";
-import { Pagination } from "../../components";
+import { Pagination, Spinner } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFeature, searched, selected, pageChanged } from "./querySlice";
 import { constants } from "../../constants";
@@ -149,7 +148,7 @@ function Query({ feature = "CAPSULES", searchableOptions = options }) {
       </StyledFormContainer>
 
       {loading ? (
-        <Typography textAlign={"center"}>Loading...</Typography>
+        <Spinner />
       ) : (
         <Result results={results} style={{ marginBottom: "2rem" }} />
       )}

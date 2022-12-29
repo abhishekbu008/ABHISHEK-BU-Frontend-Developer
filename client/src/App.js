@@ -1,11 +1,11 @@
 import "./App.css";
-import { Navbar } from "./components";
+import { Navbar, Dropdown } from "./components";
 import { AuthenticationForm, Banner, Query } from "./features";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { authDialogClose, authDialogOpen } from "./appSlice";
 import { signout } from "./features/Authentication/authenticationSlice";
-import ModalDialogTailwind from "./components/ModalDialog/ModalDialog";
+import ModalDialog from "./components/ModalDialog/ModalDialog";
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -66,12 +66,13 @@ function App() {
         </Card>
       )}
 
-      <ModalDialogTailwind
+      <ModalDialog
         open={authDialogState}
         content={<AuthenticationForm />}
         onClose={handleDialogClose}
         id="auth"
       />
+      <Dropdown />
     </>
   );
 }

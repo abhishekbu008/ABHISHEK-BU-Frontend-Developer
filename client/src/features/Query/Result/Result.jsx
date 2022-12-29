@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../../../components";
-import ModalDialogTailwind from "../../../components/ModalDialog/ModalDialog";
+import ModalDialog from "../../../components/ModalDialog/ModalDialog";
 import CapsuleContent from "../CapsuleContent/CapsuleContent";
 import { resultSelected, resultClosed } from "../querySlice";
 
@@ -36,7 +36,7 @@ function Result({ results = [], ...restProps }) {
       ))}
 
       {selectedResult && (
-        <ModalDialogTailwind
+        <ModalDialog
           open={resultModalOpen}
           title={selectedResult.capsule_serial}
           content={<CapsuleContent>{selectedResult}</CapsuleContent>}

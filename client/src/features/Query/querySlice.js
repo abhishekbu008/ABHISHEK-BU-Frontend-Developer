@@ -60,6 +60,7 @@ const querySlice = createSlice({
       state.selectedResult = null;
       state.resultModalOpen = false;
     },
+
   },
   extraReducers: (builder) => {
     builder.addCase(fetchFeature.pending, (state) => {
@@ -79,5 +80,5 @@ const querySlice = createSlice({
 });
 
 export default querySlice.reducer;
-export const { searched, selected, pageChanged, resultSelected, resultClosed } =
+export const { searched, selected, pageChanged, resultSelected, resultClosed} =
   querySlice.actions;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { createWrapperAndAppendToBody } from "../../helpers/helpers";
 
-function ModalDialogTailwind({
+function ModalDialog({
   content,
   open,
   onClose = () => {},
@@ -44,11 +44,7 @@ function ModalDialogTailwind({
       <div className="bg-white rounded shadow-lg w-1/3 overflow-hidden">
         {/* modal header */}
         <div className="border-b flex justify-between items-center">
-          {title && (
-            <h3 className="px-4 py-2 text-center flex-1">
-              {title}
-            </h3>
-          )}{" "}
+          {title && <h3 className="px-4 py-2 text-center flex-1">{title}</h3>}{" "}
           <button
             className={`bg-blue-600 px-4 py-2 hover:bg-blue-700 w-10 h-full text-white block ml-auto`}
             onClick={onClose}
@@ -81,4 +77,4 @@ function ModalDialogTailwind({
   return ReactDOM.createPortal(modalContent, wrapperElement);
 }
 
-export default ModalDialogTailwind;
+export default ModalDialog;

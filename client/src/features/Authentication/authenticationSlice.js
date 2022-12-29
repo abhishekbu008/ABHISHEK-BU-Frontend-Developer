@@ -25,7 +25,7 @@ const authSlice = createSlice({
   reducers: {
     signout: () => initialState,
     setError: (state, action) => {
-      state.error = action.payload
+      state.error = action.payload || []
     } 
   },
   extraReducers: (builder) => {
@@ -36,7 +36,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = action.payload.user;
       state.token = action.payload.token;
-      state.error = null;
+      state.error = [];
     });
     builder.addCase(signin.rejected, (state, action) => {
       state.loading = false;
