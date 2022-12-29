@@ -1,29 +1,19 @@
-import { Button, Typography } from "@mui/material";
-import {
-  StyledNavContainer,
-  StyledNavItem,
-  StyledNavList,
-  StyledLogo,
-} from "./Navbar.style";
-
 function Navbar({ navItems = [] }) {
   return (
-    <StyledNavContainer>
-      <StyledLogo marginLeft={5} variant="h5" fontSize={20}>
-        SpaceX
-      </StyledLogo>
-      <StyledNavList>
+    <nav className="flex items-center pt-8 pb-4 bg-black text-white">
+      <ul className="flex justify-between gap-8 w-full">
+        <li className="cursor-pointer text-4xl list-none pl-14">SpaceX</li>
         {navItems.map((navItem) => (
-          <StyledNavItem key={navItem.id}>
-            <Button color={"inherit"} onClick={navItem.onClick} variant="text">
-              <Typography variant="h6" fontSize={20}>
+          <li key={navItem.id} className="text-white pr-14 list-none">
+            <button onClick={navItem.onClick} variant="text">
+              <h6 variant="h5" fontSize={20} className="text-3xl uppercase">
                 {navItem.text}
-              </Typography>
-            </Button>
-          </StyledNavItem>
+              </h6>
+            </button>
+          </li>
         ))}
-      </StyledNavList>
-    </StyledNavContainer>
+      </ul>
+    </nav>
   );
 }
 

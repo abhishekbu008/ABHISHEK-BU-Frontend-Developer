@@ -1,7 +1,7 @@
-import { Paper, Typography } from "@mui/material";
-import { useState } from "react";
+import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CustomDialog } from "../../../components";
+import { Card } from "../../../components";
+import ModalDialogTailwind from "../../../components/ModalDialog/ModalDialog";
 import CapsuleContent from "../CapsuleContent/CapsuleContent";
 import { resultSelected, resultClosed } from "../querySlice";
 
@@ -26,24 +26,23 @@ function Result({ results = [], ...restProps }) {
         Results
       </Typography>
       {results.map((result, i) => (
-        <Paper
+        <Card
           key={i}
           onClick={() => handleClick(result)}
-          sx={{ cursor: "pointer" }}
+          className="mb-4 cursor-pointer"
         >
-          <Card>
-            <CapsuleContent>{result}</CapsuleContent>
-          </Card>
-        </Paper>
+          <CapsuleContent>{result}</CapsuleContent>
+        </Card>
       ))}
 
       {selectedResult && (
-        <CustomDialog
+        <ModalDialogTailwind
           open={resultModalOpen}
-          handleClose={handleModalClose}
           title={selectedResult.capsule_serial}
-          actions={actions}
           content={<CapsuleContent>{selectedResult}</CapsuleContent>}
+          onClose={handleModalClose}
+          id="capsule"
+          actions={actions}
         />
       )}
     </div>

@@ -11,4 +11,11 @@ const buildQuery = (searchValues) => {
   return str.join("&");
 };
 
-export { buildQuery };
+const createWrapperAndAppendToBody = (id) => {
+  const wrapperElement = document.createElement("div");
+  wrapperElement.setAttribute("id", id);
+  document.body.appendChild(wrapperElement);
+  return wrapperElement;
+};
+
+export { buildQuery, createWrapperAndAppendToBody };

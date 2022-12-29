@@ -1,10 +1,11 @@
-import { Card as MuiCard, CardContent } from "@mui/material";
-
-function Card({ children }) {
+function Card({ children, className, ...restProps }) {
   return (
-    <MuiCard>
-      <CardContent>{children}</CardContent>
-    </MuiCard>
+    <div
+      className={`h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden shadow-lg ${className}`}
+      {...restProps}
+    >
+      {children}
+    </div>
   );
 }
 

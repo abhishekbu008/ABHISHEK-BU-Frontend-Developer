@@ -6,15 +6,16 @@ const initialState = {
   loading: false,
   user: null,
   token: "",
-  error: null,
+  error: [],
 };
 
 export const signin = createAsyncThunk(
   "user/auth",
-  ({ email, password, type }) => {
+  ({ email, password, type }, { rejectWithValue }) => {
     return axios
       .post(constants.AUTH[type], { email, password })
-      .then((res) => res.data);
+      .then((res) => res.data)
+      .catch((err) => rejectWithValue(err.response.data.errors));
   }
 );
 
@@ -23,6 +24,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     signout: () => initialState,
+    setError: (state, action) => {
+      state.error = action.payload
+    } 
   },
   extraReducers: (builder) => {
     builder.addCase(signin.pending, (state) => {
@@ -38,10 +42,10 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = null;
       state.token = "";
-      state.error = action.error.message;
+      state.error = action.payload;
     });
   },
 });
 
 export default authSlice.reducer;
-export const { signout } = authSlice.actions;
+export const { signout, setError } = authSlice.actions;

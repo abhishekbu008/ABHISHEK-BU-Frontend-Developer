@@ -1,10 +1,11 @@
 import "./App.css";
-import { CustomDialog, Navbar } from "./components";
+import { Navbar } from "./components";
 import { AuthenticationForm, Banner, Query } from "./features";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { authDialogClose, authDialogOpen } from "./appSlice";
 import { signout } from "./features/Authentication/authenticationSlice";
+import ModalDialogTailwind from "./components/ModalDialog/ModalDialog";
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -44,7 +45,7 @@ function App() {
       {auth.user ? (
         <Query total={18} limit={8} />
       ) : (
-        <Card sx={{ width: "100%", minHeight: "50vh" }}>
+        <Card>
           <CardContent
             sx={{
               display: "block",
@@ -65,11 +66,11 @@ function App() {
         </Card>
       )}
 
-      <CustomDialog
+      <ModalDialogTailwind
         open={authDialogState}
-        handleClose={handleDialogClose}
         content={<AuthenticationForm />}
-        contentType="component"
+        onClose={handleDialogClose}
+        id="auth"
       />
     </>
   );
