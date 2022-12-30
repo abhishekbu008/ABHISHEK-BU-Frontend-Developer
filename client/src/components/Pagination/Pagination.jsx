@@ -1,9 +1,4 @@
-function Pagination({
-  page = 1,
-  count = 5,
-  onChange = () => {},
-  ...restProps
-}) {
+function Pagination({ page, count, onChange = () => {}, ...restProps }) {
   const pageNumbers = [];
   for (let i = 1; i <= count; i++) {
     let className =
@@ -39,7 +34,7 @@ function Pagination({
 
   return (
     <nav {...restProps}>
-      <ul className="inline-flex">
+      <ul className="inline-flex flex-wrap">
         <Button
           disabled={page === 1}
           onClick={() => onChange(page - 1 < 1 ? 1 : page - 1)}

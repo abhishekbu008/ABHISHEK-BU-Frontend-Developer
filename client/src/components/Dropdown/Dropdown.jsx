@@ -55,7 +55,7 @@ function Dropdown({ options, placeholder, onChange, selected = [] }) {
 
   return (
     <div className="w-full md:w-1/2 flex flex-col items-center h-full mx-auto">
-      <div className="inline-block relative w-64">
+      <div className="inline-block relative w-full">
         <div className="flex flex-col items-center relative">
           <div className="w-full" onClick={() => setShow(!show)}>
             <div className="my-2 p-1 flex border border-gray-200 bg-white rounded">

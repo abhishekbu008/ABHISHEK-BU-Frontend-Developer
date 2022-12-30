@@ -1,11 +1,11 @@
 import "./App.css";
 import { Navbar } from "./components";
 import { AuthenticationForm, Banner, Query } from "./features";
-import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { authDialogClose, authDialogOpen } from "./appSlice";
 import { signout } from "./features/Authentication/authenticationSlice";
 import ModalDialog from "./components/ModalDialog/ModalDialog";
+import { constants } from "./constants";
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -43,28 +43,11 @@ function App() {
       <Navbar navItems={navItems} />
       <Banner />
       {auth.user ? (
-        <Query total={18} limit={8} />
-      ) : (
-        <Card>
-          <CardContent
-            sx={{
-              display: "block",
-              marginTop: "25vh",
-              transform: "translateY(-50%)",
-            }}
-          >
-            <Typography textAlign={"center"}>
-              <Button
-                sx={{ height: "5rem" }}
-                variant="contained"
-                onClick={() => dispatch(authDialogOpen())}
-              >
-                Sign in to view capsules
-              </Button>
-            </Typography>
-          </CardContent>
-        </Card>
-      )}
+        <Query
+          feature="CAPSULES"
+          searchableOptions={constants.CAPSULE_OPTIONS}
+        />
+      ) : null}
 
       <ModalDialog
         open={authDialogState}

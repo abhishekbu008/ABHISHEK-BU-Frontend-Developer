@@ -41,7 +41,7 @@ function ModalDialog({
   const modalContent = (
     <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
       {/* modal */}
-      <div className="bg-white rounded shadow-lg w-1/3 overflow-hidden">
+      <div className="bg-white rounded shadow-lg overflow-hidden w-full h-screen md:w-1/2 md:h-fit lg:w-1/3 lg:h-fit">
         {/* modal header */}
         <div className="border-b flex justify-between items-center">
           {title && <h3 className="px-4 py-2 text-center flex-1">{title}</h3>}{" "}

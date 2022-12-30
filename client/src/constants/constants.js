@@ -11,7 +11,7 @@ const constants = {
   },
   CAPSULES: {
     TOTAL_ITEMS: 18,
-    LIMIT: 8,
+    LIMIT: 6,
   },
   ERRORS: {
     EMAIL: { message: "Email must be valid", field: "email" },
@@ -20,6 +20,16 @@ const constants = {
   },
   EMAIL_REGEX:
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  CAPSULE_OPTIONS: [
+    { text: "Capsule Serial", value: "capsule_serial", selected: false },
+    { text: "Capsule Id", value: "capsule_id", selected: false },
+    { text: "Status", value: "status", selected: false },
+    { text: "Original Launch", value: "original_launch", selected: false },
+    { text: "Missions", value: "mission", selected: false },
+    { text: "Landings", value: "landings", selected: false },
+    { text: "Type", value: "type", selected: false },
+    { text: "Reuse Count", value: "reuse_count", selected: false },
+  ],
 };
 
 export default constants;
