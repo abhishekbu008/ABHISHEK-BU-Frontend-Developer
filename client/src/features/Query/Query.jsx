@@ -31,7 +31,7 @@ function Query({ feature, searchableOptions }) {
     const changedValues = {};
     selectedValues.forEach((select) => {
       changedValues[select.value] = searchValues[select.value]
-        ? searchValues[select.val]
+        ? searchValues[select.value]
         : "";
     });
     dispatch(selected(selectedValues));
@@ -40,7 +40,7 @@ function Query({ feature, searchableOptions }) {
 
   const handleSearchChange = (value, select) => {
     const clonedSearchValues = { ...searchValues };
-    clonedSearchValues[select.text] = value;
+    clonedSearchValues[select.value] = value;
     dispatch(searched(clonedSearchValues));
   };
 
@@ -49,7 +49,10 @@ function Query({ feature, searchableOptions }) {
   };
 
   return (
-    <div id="search" className="min-h-screen flex flex-col items-center m-4 md:m-10">
+    <div
+      id="search"
+      className="min-h-screen flex flex-col items-center m-4 md:m-10"
+    >
       <h6 className="text-center mt-8 mb-8 text-4xl">{feature}</h6>
 
       <div className="flex flex-col justify-center items-center w-full">
