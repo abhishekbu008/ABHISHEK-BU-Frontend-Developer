@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Input } from "../../components";
+import { Input, Spinner } from "../../components";
 import { constants } from "../../constants";
 import { setError, signin } from "./authenticationSlice";
 
@@ -10,6 +10,7 @@ export default function Authenticate() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const errors = useSelector((state) => state.auth.error);
+  const loading = useSelector((state) => state.auth.loading);
 
   const passwordError = errors.find((e) => e.field === "password") || null;
   const emailError = errors.find((e) => e.field === "email") || null;
@@ -105,13 +106,15 @@ export default function Authenticate() {
           !passwordError &&
           !emailError &&
           errors.map((e) => (
-            <p key={e.message} className="text-red-500 text-xs italic mb-4 text-center">
+            <p
+              key={e.message}
+              className="text-red-500 text-xs italic mb-4 text-center"
+            >
               {e.message}
             </p>
           ))}
 
         <div className="flex items-center justify-between">
-          
           <button
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
             onClick={(e) => {
@@ -121,13 +124,18 @@ export default function Authenticate() {
           >
             {`Switch to ${nextTitle(title)}`}
           </button>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-            onClick={handleSubmit}
-          >
-            {title}
-          </button>
+          {!loading ? (
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:cursor-not-allowed"
+              type="button"
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {title}
+            </button>
+          ) : (
+            <Spinner className="ml-auto w-14"/>
+          )}
         </div>
       </form>
     </div>

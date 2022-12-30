@@ -25,14 +25,15 @@ const authSlice = createSlice({
   reducers: {
     signout: () => initialState,
     setError: (state, action) => {
-      state.error = action.payload || []
-    } 
+      state.error = action.payload || [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signin.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(signin.fulfilled, (state, action) => {
+      localStorage.setItem("token", action.payload.token);
       state.loading = false;
       state.user = action.payload.user;
       state.token = action.payload.token;
@@ -42,7 +43,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = null;
       state.token = "";
-      state.error = action.payload;
+      state.error = action.payload || [{ message: "Something went wrong" }];
     });
   },
 });

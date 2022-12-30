@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import Result from "./Result/Result";
 import { buildQuery } from "../../helpers/helpers";
-import { Input, Pagination, Spinner } from "../../components";
+import { Error, Input, Pagination, Spinner } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFeature, searched, selected, pageChanged } from "./querySlice";
 import { constants } from "../../constants";
@@ -15,6 +15,7 @@ function Query({ feature, searchableOptions }) {
   const selectedOptions = useSelector((state) => state.query.selectedOptions);
   const searchValues = useSelector((state) => state.query.searchValues);
   const pagination = useSelector((state) => state.query.pagination);
+  const error = useSelector((state) => state.query.error);
 
   useEffect(() => {
     const queryObj = {
@@ -47,6 +48,8 @@ function Query({ feature, searchableOptions }) {
   const handlePageChange = (page) => {
     dispatch(pageChanged(page));
   };
+
+  if (error.length > 0) return <Error />;
 
   return (
     <div

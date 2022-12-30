@@ -5,7 +5,7 @@ import { axiosSpaceX as axios } from "../../lib";
 const initialState = {
   loading: false,
   results: [],
-  error: "",
+  error: [],
   searchValues: {},
   selectedOptions: [],
   pagination: {
@@ -22,7 +22,7 @@ const initialState = {
 
 export const fetchFeature = createAsyncThunk(
   "spacex/fetchCapsules",
-  ({ feature, query }) => {
+  ({ feature, query }, { rejectWithValue }) => {
     return axios
       .get(constants.AXIOS_SPACEX[feature] + `?${query}`)
       .then((res) => {
@@ -34,7 +34,8 @@ export const fetchFeature = createAsyncThunk(
           modifiedRes.push(modified);
         });
         return modifiedRes;
-      });
+      })
+      .catch((err) => rejectWithValue(err.response.data.errors));
   }
 );
 
@@ -68,12 +69,12 @@ const querySlice = createSlice({
     builder.addCase(fetchFeature.fulfilled, (state, action) => {
       state.loading = false;
       state.results = action.payload;
-      state.error = "";
+      state.error = [];
     });
     builder.addCase(fetchFeature.rejected, (state, action) => {
       state.loading = false;
       state.results = [];
-      state.error = action.error.message;
+      state.error = action.payload || [{ message: "Something went wrong" }];
     });
   },
 });
