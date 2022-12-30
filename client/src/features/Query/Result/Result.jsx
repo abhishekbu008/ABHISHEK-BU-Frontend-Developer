@@ -22,18 +22,20 @@ function Result({ results = [], ...restProps }) {
 
   return (
     <div {...restProps}>
-      <Typography marginY={8} fontSize={40} textAlign="center">
-        Results
-      </Typography>
-      {results.map((result, i) => (
-        <Card
-          key={i}
-          onClick={() => handleClick(result)}
-          className="mb-4 cursor-pointer"
-        >
-          <CapsuleContent>{result}</CapsuleContent>
-        </Card>
-      ))}
+      <div
+        className="grid gap-8 w-full"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(20rem, 1fr))" }}
+      >
+        {results.map((result, i) => (
+          <Card
+            key={i}
+            onClick={() => handleClick(result)}
+            className="mb-4 cursor-pointer"
+          >
+            <CapsuleContent>{result}</CapsuleContent>
+          </Card>
+        ))}
+      </div>
 
       {selectedResult && (
         <ModalDialog

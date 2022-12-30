@@ -1,5 +1,5 @@
 import "./App.css";
-import { Navbar, Dropdown } from "./components";
+import { Navbar } from "./components";
 import { AuthenticationForm, Banner, Query } from "./features";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -72,7 +72,6 @@ function App() {
         onClose={handleDialogClose}
         id="auth"
       />
-      <Dropdown />
     </>
   );
 }

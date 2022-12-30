@@ -1,39 +1,12 @@
-import {
-  Box,
-  Checkbox,
-  FormControl,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Typography,
-} from "@mui/material";
 import React, { useEffect } from "react";
 
-import {
-  StyledContainer,
-  StyledFormContainer,
-  StyledSearchContainer,
-  StyledSearchInput,
-} from "./Query.style";
 import Result from "./Result/Result";
 import { buildQuery } from "../../helpers/helpers";
-import { Pagination, Spinner } from "../../components";
+import { Input, Pagination, Spinner } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFeature, searched, selected, pageChanged } from "./querySlice";
 import { constants } from "../../constants";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+import { Dropdown } from "../../components";
 
 const options = [
   "capsule_serial",
@@ -44,6 +17,17 @@ const options = [
   "landings",
   "type",
   "reuse_count",
+];
+
+const customOptions = [
+  { text: "capsule_serial", value: "capsule_serial", selected: false },
+  { text: "capsule_id", value: "capsule_id", selected: false },
+  { text: "status", value: "status", selected: false },
+  { text: "original_launch", value: "original_launch", selected: false },
+  { text: "mission", value: "mission", selected: false },
+  { text: "landings", value: "landings", selected: false },
+  { text: "type", value: "type", selected: false },
+  { text: "reuse_count", value: "reuse_count", selected: false },
 ];
 
 function Query({ feature = "CAPSULES", searchableOptions = options }) {
@@ -65,25 +49,20 @@ function Query({ feature = "CAPSULES", searchableOptions = options }) {
     dispatch(fetchFeature({ feature, query }));
   }, [searchValues, selectedOptions, pagination.offset, dispatch, feature]);
 
-  const handleSelectChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    const selectValues = typeof value === "string" ? value.split(",") : value;
+  const handleSelectChange = (selectedValues) => {
     const changedValues = {};
-    for (let val of selectValues) {
-      changedValues[val] = searchValues[val] ? searchValues[val] : "";
-    }
-    dispatch(selected(selectValues));
+    selectedValues.forEach((select) => {
+      changedValues[select.value] = searchValues[select.value]
+        ? searchValues[select.val]
+        : "";
+    });
+    dispatch(selected(selectedValues));
     dispatch(searched(changedValues));
   };
 
-  const handleSearchChange = (event, select) => {
-    const {
-      target: { value },
-    } = event;
+  const handleSearchChange = (value, select) => {
     const clonedSearchValues = { ...searchValues };
-    clonedSearchValues[select] = value;
+    clonedSearchValues[select.text] = value;
     dispatch(searched(clonedSearchValues));
   };
 
@@ -92,72 +71,50 @@ function Query({ feature = "CAPSULES", searchableOptions = options }) {
   };
 
   return (
-    <StyledContainer id="search">
-      <Typography
-        fontSize={40}
-        textAlign={"center"}
-        variant="h6"
-        marginTop={3}
-        marginBottom={6}
-      >
-        {feature}
-      </Typography>
+    <div id="search" className="min-h-screen flex flex-col items-center m-10">
+      <h6 className="text-center mt-8 mb-8 text-4xl">{feature}</h6>
 
-      <StyledFormContainer>
-        <Box marginBottom={4}>
-          <FormControl sx={{ width: 300 }}>
-            <InputLabel id="demo-multiple-checkbox-label">Search By</InputLabel>
-            <Select
-              labelId="select-by-label"
-              id="select-by"
-              multiple
-              value={selectedOptions}
-              onChange={handleSelectChange}
-              input={<OutlinedInput label="Search By" />}
-              renderValue={(selected) => selected.join(", ")}
-              placeholder="Search By"
-              MenuProps={MenuProps}
-            >
-              {searchableOptions.map((opt) => (
-                <MenuItem key={opt} value={opt}>
-                  <Checkbox checked={selectedOptions.indexOf(opt) > -1} />
-                  <ListItemText primary={opt} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
+      <div className="flex flex-col justify-center items-center w-full">
+        <div className="mb-4">
+          <Dropdown
+            options={customOptions}
+            placeholder="Search By"
+            onChange={handleSelectChange}
+            selected={selectedOptions}
+          />
+        </div>
 
-        <StyledSearchContainer
-          component="form"
-          noValidate
-          autoComplete="off"
-          fontSize={4}
-        >
+        <div className="flex justify-between">
           {selectedOptions.map((select) => (
-            <StyledSearchInput
-              key={select}
-              id={select}
-              label={select}
-              variant="outlined"
-              value={searchValues[select]}
-              onChange={(e) => handleSearchChange(e, select)}
+            <Input
+              key={select.value}
+              placeholder={select.text}
+              label={select.text.toUpperCase()}
+              value={searchValues[select.text]}
+              onChange={(value) => handleSearchChange(value, select)}
+              className="mr-4"
             />
           ))}
-        </StyledSearchContainer>
-      </StyledFormContainer>
+        </div>
+      </div>
 
       {loading ? (
         <Spinner />
       ) : (
-        <Result results={results} style={{ marginBottom: "2rem" }} />
+        <div className="w-full">
+          <Pagination
+            page={pagination.page}
+            onChange={handlePageChange}
+            count={pagination.totalPages}
+            className=""
+          />
+          <h5 className="text-center text-4xl">
+            Results
+          </h5>
+          <Result results={results} style={{ marginBottom: "2rem" }} />
+        </div>
       )}
-      <Pagination
-        page={pagination.page}
-        onChange={handlePageChange}
-        count={pagination.totalPages}
-      />
-    </StyledContainer>
+    </div>
   );
 }
 

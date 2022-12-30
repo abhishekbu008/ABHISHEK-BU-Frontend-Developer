@@ -1,4 +1,9 @@
-function Pagination({ page = 1, count = 5, onChange = () => {} }) {
+function Pagination({
+  page = 1,
+  count = 5,
+  onChange = () => {},
+  ...restProps
+}) {
   const pageNumbers = [];
   for (let i = 1; i <= count; i++) {
     let className =
@@ -33,7 +38,7 @@ function Pagination({ page = 1, count = 5, onChange = () => {} }) {
   };
 
   return (
-    <nav aria-label="Page navigation">
+    <nav {...restProps}>
       <ul className="inline-flex">
         <Button
           disabled={page === 1}

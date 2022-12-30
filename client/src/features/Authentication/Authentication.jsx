@@ -120,7 +120,10 @@ export default function Authenticate() {
           </button>
           <button
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            onClick={() => setTitle(nextTitle(title))}
+            onClick={(e) => {
+              e.preventDefault();
+              setTitle(nextTitle(title));
+            }}
           >
             {`Switch to ${nextTitle(title)}`}
           </button>
