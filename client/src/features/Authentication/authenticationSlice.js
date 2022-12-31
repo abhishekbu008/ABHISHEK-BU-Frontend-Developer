@@ -23,7 +23,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signout: () => initialState,
+    signout: () => {
+      localStorage.removeItem("token");
+      return initialState;
+    },
     setError: (state, action) => {
       state.error = action.payload || [];
     },
