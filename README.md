@@ -34,11 +34,12 @@
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
 # Clone this repository
+
 $ git clone https://github.com/abhishekbu008/ABHISHEK-BU-Frontend-Developer.git
 
 # Install dependencies
 
-From root folder 
+From root folder
 
 $ cd ./server
 $ npm install
@@ -46,13 +47,13 @@ $ cd ./client
 $ npm install
 
 # Run the app
+
 From root folder
 
 $ cd ./server
 $ npm start
 $ cd ./client
 $ npm start
-```
 
 ## Acknowledgements
 
