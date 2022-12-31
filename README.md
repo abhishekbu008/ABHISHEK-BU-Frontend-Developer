@@ -19,11 +19,11 @@
 
 ### Screenshots
 
-![Alt text](./docs/img/img-1.png?raw=true "Screenshot 1")
-![Alt text](./docs/img/img-2.png?raw=true "Screenshot 2")
-![Alt text](./docs/img/img-3.png?raw=true "Screenshot 3")
-![Alt text](./docs/img/img-4.png?raw=true "Screenshot 4")
-![Alt text](./docs/img/img-5.png?raw=true "Screenshot 5")
+![img-1](https://user-images.githubusercontent.com/80893354/210132288-23de9aec-df3e-4a33-96c1-c44e7d3b3d2d.png)
+![img-2](https://user-images.githubusercontent.com/80893354/210132289-0dd5b99b-c14e-4327-a176-e8cb1bd3a5a8.png)
+![img-3](https://user-images.githubusercontent.com/80893354/210132290-abaef5c0-14e5-44d4-821b-ca3165afe04d.png)
+![img-4](https://user-images.githubusercontent.com/80893354/210132291-ed3a3f6f-bfa2-479a-85ee-a275d581c965.png)
+![img-5](https://user-images.githubusercontent.com/80893354/210132293-7e130381-2f0d-47f2-bd09-03828292cec8.png)
 
 ### Built With
 
