@@ -15,15 +15,9 @@ const appSlice = createSlice({
     authDialogClose: (state) => {
       state.authDialog = false;
     },
-    clearError: (state) => {
-      state.authDialogError = false;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(signin.fulfilled, (state) => {
-      state.authDialog = false;
-    });
-    builder.addCase(signin.rejected, (state) => {
       state.authDialog = false;
     });
   },

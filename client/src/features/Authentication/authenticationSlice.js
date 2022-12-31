@@ -23,10 +23,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signout: () => {
-      localStorage.removeItem("token");
-      return initialState;
-    },
+    signout: () => initialState,
     setError: (state, action) => {
       state.error = action.payload || [];
     },
@@ -46,7 +43,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = null;
       state.token = "";
-      state.error = action.payload || [];
+      state.error = action.payload || [{ message: "Something went wrong" }];
     });
   },
 });
