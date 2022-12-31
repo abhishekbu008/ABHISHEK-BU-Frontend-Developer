@@ -10,10 +10,8 @@
 
 - [Overview](#overview)
   - [Built With](#built-with)
-- [Features](#features)
 - [How to use](#how-to-use)
 - [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
 
 <!-- OVERVIEW -->
 
@@ -21,8 +19,12 @@
 
 ### Screenshots
 
-![screenshot]()
-![screenshot](https://github.com/abhishekbu008/Recipe_blog/blob/master/screenshots/screenshot-2.png)
+![plot](./docs/img/img-1.png)
+![plot](./docs/img/img-2.png)
+![plot](./docs/img/img-3.png)
+![plot](./docs/img/img-4.png)
+![plot](./docs/img/img-5.png)
+
 
 ### Built With
 
