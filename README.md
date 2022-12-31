@@ -19,12 +19,11 @@
 
 ### Screenshots
 
-![plot](./docs/img/img-1.png)
-![plot](./docs/img/img-2.png)
-![plot](./docs/img/img-3.png)
-![plot](./docs/img/img-4.png)
-![plot](./docs/img/img-5.png)
-
+![Alt text](./docs/img/img-1.png?raw=true "Screenshot 1")
+![Alt text](./docs/img/img-2.png?raw=true "Screenshot 2")
+![Alt text](./docs/img/img-3.png?raw=true "Screenshot 3")
+![Alt text](./docs/img/img-4.png?raw=true "Screenshot 4")
+![Alt text](./docs/img/img-5.png?raw=true "Screenshot 5")
 
 ### Built With
 
