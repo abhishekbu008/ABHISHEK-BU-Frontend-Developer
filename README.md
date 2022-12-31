@@ -34,7 +34,7 @@
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
 # Clone this repository
-$ https://github.com/abhishekbu008/ABHISHEK-BU-Frontend-Developer.git
+$ git clone https://github.com/abhishekbu008/ABHISHEK-BU-Frontend-Developer.git
 
 # Install dependencies
 
