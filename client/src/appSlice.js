@@ -3,6 +3,7 @@ import { signin } from "./features/Authentication/authenticationSlice";
 
 const initialState = {
   authDialog: false,
+  authDialogError: false,
 };
 
 const appSlice = createSlice({
@@ -15,13 +16,20 @@ const appSlice = createSlice({
     authDialogClose: (state) => {
       state.authDialog = false;
     },
+    clearError: (state) => {
+      state.authDialogError = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signin.fulfilled, (state) => {
       state.authDialog = false;
     });
+    builder.addCase(signin.rejected, (state) => {
+      state.authDialog = false;
+      state.authDialogError = true;
+    });
   },
 });
 
 export default appSlice.reducer;
-export const { authDialogOpen, authDialogClose } = appSlice.actions;
+export const { authDialogOpen, authDialogClose, clearError } = appSlice.actions;

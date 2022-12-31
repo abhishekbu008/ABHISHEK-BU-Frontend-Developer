@@ -5,7 +5,7 @@ import queryReducer from "../features/Query/querySlice";
 
 const localStorageState = localStorage.getItem("authState");
 const persistedState = localStorageState
-  ? { auth: JSON.stringify(localStorageState) }
+  ? { auth: JSON.parse(localStorageState) }
   : {};
 
 const store = configureStore({
@@ -19,12 +19,8 @@ const store = configureStore({
 
 store.subscribe(() => {
   const state = {
-    auth: {
-      loading: false,
-      user: store.getState().auth.user,
-      token: store.getState().auth.token,
-      error: [],
-    },
+    ...store.getState().auth,
+    error: [],
   };
   localStorage.setItem("authState", JSON.stringify(state));
 });

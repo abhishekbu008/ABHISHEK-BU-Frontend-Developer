@@ -18,6 +18,7 @@ const constants = {
     PASSWORD_REQUIRED: { message: "Password must be valid", field: "password" },
     PASSWORD_VALID: { message: "Password must be between 4 and 20 characters" },
     INVALID_CREDENTIALS: { message: "Invalid Credentials" },
+    GENERIC: { message: "Something went wrong, Please try again" },
   },
   EMAIL_REGEX:
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,

@@ -134,7 +134,7 @@ export default function Authenticate() {
               {title}
             </button>
           ) : (
-            <Spinner className="ml-auto w-14"/>
+            <Spinner className="ml-auto w-14" />
           )}
         </div>
       </form>

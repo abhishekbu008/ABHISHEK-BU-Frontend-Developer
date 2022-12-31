@@ -69,12 +69,13 @@ const querySlice = createSlice({
     builder.addCase(fetchFeature.fulfilled, (state, action) => {
       state.loading = false;
       state.results = action.payload;
+      state.pagination.totalPages = action.payload.length;
       state.error = [];
     });
     builder.addCase(fetchFeature.rejected, (state, action) => {
       state.loading = false;
       state.results = [];
-      state.error = action.payload || [{ message: "Something went wrong" }];
+      state.error = action.payload || [{ message: constants.ERRORS.GENERIC }];
     });
   },
 });

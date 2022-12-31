@@ -1,8 +1,8 @@
 import "./App.css";
-import { Navbar } from "./components";
+import { Error, Navbar } from "./components";
 import { AuthenticationForm, Banner, Query } from "./features";
 import { useDispatch, useSelector } from "react-redux";
-import { authDialogClose, authDialogOpen } from "./appSlice";
+import { authDialogClose, authDialogOpen, clearError } from "./appSlice";
 import { signout } from "./features/Authentication/authenticationSlice";
 import ModalDialog from "./components/ModalDialog/ModalDialog";
 import { constants } from "./constants";
@@ -39,7 +39,7 @@ function App() {
   }
 
   return (
-    <>
+    <Error>
       <Navbar navItems={navItems} />
       <Banner />
       {auth.user ? (
@@ -55,7 +55,7 @@ function App() {
         onClose={handleDialogClose}
         id="auth"
       />
-    </>
+    </Error>
   );
 }
 
