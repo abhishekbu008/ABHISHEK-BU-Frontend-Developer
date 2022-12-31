@@ -69,7 +69,9 @@ const querySlice = createSlice({
     builder.addCase(fetchFeature.fulfilled, (state, action) => {
       state.loading = false;
       state.results = action.payload;
-      state.pagination.totalPages = action.payload.length;
+      state.pagination.totalPages = Math.ceil(
+        action.payload.length / constants.CAPSULES.LIMIT
+      );
       state.error = [];
     });
     builder.addCase(fetchFeature.rejected, (state, action) => {
