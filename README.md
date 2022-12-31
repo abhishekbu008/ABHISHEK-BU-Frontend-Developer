@@ -7,7 +7,6 @@
 ## Demo
 
 - [Video URL](https://drive.google.com/file/d/1yOMVvCl4-3Cx4EJmsoFDi4WYdY8hbW0P/view?usp=share_link)
-<a href="https://drive.google.com/file/d/1yOMVvCl4-3Cx4EJmsoFDi4WYdY8hbW0P/view?usp=share_link" target="_blank">Video URL</a>
 
 <!-- TABLE OF CONTENTS -->
 
