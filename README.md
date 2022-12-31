@@ -4,8 +4,9 @@
    Solution for a challenge  <a href="#">ABHISHEK B U - Frontend Developer</a>.
 </div>
 
-## Demo  
-- [Video URL](./docs/demo-video.mkv)
+## Demo
+
+- [Video URL](https://drive.google.com/file/d/1yOMVvCl4-3Cx4EJmsoFDi4WYdY8hbW0P/view?usp=share_link)
 
 <!-- TABLE OF CONTENTS -->
 
