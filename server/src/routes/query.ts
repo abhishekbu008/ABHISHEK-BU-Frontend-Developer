@@ -9,7 +9,6 @@ router.get(
   "/api/spacex/query",
   currentUser,
   async (req: Request, res: Response, next: NextFunction) => {
-
     try {
       if (!req.currentUser) {
         throw new BadRequestError("Invalid Credentials");

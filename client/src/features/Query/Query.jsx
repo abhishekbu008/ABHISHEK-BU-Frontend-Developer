@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 
 import Result from "./Result/Result";
-import { buildQuery } from "../../helpers/helpers";
 import { Error, Input, Pagination, Spinner } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFeature, searched, selected, pageChanged } from "./querySlice";
@@ -18,13 +17,12 @@ function Query({ feature, searchableOptions }) {
   const error = useSelector((state) => state.query.error);
 
   useEffect(() => {
-    const queryObj = {
+    const query = {
       ...searchValues,
       limit: constants.CAPSULES.LIMIT,
       offset: pagination.offset,
       id: true,
     };
-    const query = buildQuery(queryObj);
     dispatch(fetchFeature({ feature, query }));
   }, [searchValues, selectedOptions, pagination.offset, dispatch, feature]);
 

@@ -24,7 +24,9 @@ export const fetchFeature = createAsyncThunk(
   "spacex/fetchCapsules",
   ({ feature, query }, { rejectWithValue }) => {
     return axios
-      .get(constants.AXIOS_SPACEX[feature] + `?${query}`)
+      .get(constants.AXIOS_SPACEX[feature], {
+        params: query,
+      })
       .then((res) => {
         const modifiedRes = [];
         res.data.forEach((r) => {
@@ -52,6 +54,7 @@ const querySlice = createSlice({
     pageChanged: (state, action) => {
       state.pagination.page = action.payload;
       state.pagination.offset = constants.CAPSULES.LIMIT * (action.payload - 1);
+
     },
     resultSelected: (state, action) => {
       state.selectedResult = action.payload;
